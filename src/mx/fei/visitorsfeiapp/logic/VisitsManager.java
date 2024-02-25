@@ -2,18 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package mx.fei.visitorsfeiapp.dataaccess;
+package mx.fei.visitorsfeiapp.logic;
 
-import mx.fei.visitorsfeiapp.logic.Visit;
-import mx.fei.visitorsfeiapp.logic.Visitor;
-import java.util.ArrayList;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalTime;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import mx.fei.visitorsfeiapp.dataaccess.DatabaseManager;
 /**
  *
  * @author chuch
@@ -24,8 +23,7 @@ public class VisitsManager {
     public VisitsManager() {
         dbManager = new DatabaseManager();
     }
-    public boolean insertAVisit(Visitor visitor) {
-            
+    public boolean registerAVisitor(Visitor visitor) {
         boolean band = false;
         PreparedStatement statement = null;
         Connection connection = null;
@@ -50,7 +48,27 @@ public class VisitsManager {
         dbManager.closeConnection();
         return band;
     }
-    public boolean registerDepartureTime(String id) {
+    public boolean registerCheckIn(Visitor visitor) {
+        PreparedStatement statement = null;
+        Connection connection = null;
+        ResultSet result = null;
+        String query = "INSERT INTO Visitante VALUES (?, ?, ?, ?)";
+        try{
+            connection = dbManager.getConnection();
+            statement = connection.prepareStatement(query);
+            statement.setString(1,visitor.getId());
+            statement.setString(2, visitor.getName());
+            statement.setString(3, visitor.getLastname());
+            statement.setString(4, visitor.getEmail());
+            statement.executeUpdate();
+            dbManager.closeConnection();
+        } catch(SQLException e) {
+            dbManager.closeConnection();
+            return false;
+        }
+        return true;
+    }
+    public boolean registerCheckOut(String id) {
         boolean band = false;
         PreparedStatement statement = null;
         Connection connection = null;
@@ -69,9 +87,8 @@ public class VisitsManager {
         }
         dbManager.closeConnection();
         return band;
-        
-    }         
-    public ArrayList<Visit> getRegisteredVisits(String date){
+    }
+    public ArrayList<Visit> getVisitsByDay(String date){
         boolean band = false;
         PreparedStatement statement = null;
         Connection connection = null;

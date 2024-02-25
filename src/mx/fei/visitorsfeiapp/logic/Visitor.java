@@ -15,6 +15,7 @@ public class Visitor {
     private String email;
     private String subject;
     private String visiting;
+    private String belonging;
 
     public String getId() {
         return id;
@@ -51,5 +52,11 @@ public class Visitor {
     }
     public void setVisiting(String visiting) {
         this.visiting = visiting;
+    }   
+    public String getBelonging() {
+        return belonging;
+    }
+    public void setBelonging(String belonging) {
+        this.belonging = belonging;
     }   
 }

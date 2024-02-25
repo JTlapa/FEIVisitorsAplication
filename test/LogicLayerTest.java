@@ -7,8 +7,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Assert;
 import mx.fei.visitorsfeiapp.logic.Administrator;
-import mx.fei.visitorsfeiapp.logic.VisitsAdministrator;
+import mx.fei.visitorsfeiapp.logic.VisitsManager;
 import mx.fei.visitorsfeiapp.logic.Visitor;
+import mx.fei.visitorsfeiapp.gui.Validator;
 /**
  *
  * @author chuch
@@ -28,7 +29,7 @@ public class LogicLayerTest {
     
     @Test
     public void testRegisterMemberVisitSuccess() {
-        VisitsAdministrator visitsAdmin = new VisitsAdministrator();
+        VisitsManager visitsAdmin = new VisitsManager();
         Visitor visitor = new Visitor();
         visitor.setId("S3659");
         visitor.setName("Jesus");
@@ -41,7 +42,7 @@ public class LogicLayerTest {
     
     @Test
     public void testRegisterExternalVisitSuccess() {
-        VisitsAdministrator visitsAdmin = new VisitsAdministrator();
+        VisitsManager visitsAdmin = new VisitsManager();
         Visitor visitor = new Visitor();
         visitor.setId("1ABCD");
         visitor.setName("Jose");
@@ -54,13 +55,25 @@ public class LogicLayerTest {
     
     @Test
     public void testCheckOutSuccess() {
-        VisitsAdministrator visitsAdmin = new VisitsAdministrator();
+        VisitsManager visitsAdmin = new VisitsManager();
         assertTrue(visitsAdmin.checkOut("S3659"));
     }
     
     @Test
     public void testGetVisitsByDaySuccess() {
-        VisitsAdministrator visitsAdmin = new VisitsAdministrator();
+        VisitsManager visitsAdmin = new VisitsManager();
         assertNotNull(visitsAdmin.getVisitsByDay("2024-02-23"));
+    }
+    
+    @Test
+    public void testValidateVisitorDataFalse() {
+        Visitor visitor = new Visitor();
+        visitor.setName("Jesus");
+        visitor.setLastname("tlapa");
+        visitor.setSubject("clases");
+        visitor.setId("S36a9");
+        visitor.setBelonging("MemberUV");
+        Validator validator = new Validator();
+        assertFalse(validator.validateVisitorData(visitor));
     }
 }
