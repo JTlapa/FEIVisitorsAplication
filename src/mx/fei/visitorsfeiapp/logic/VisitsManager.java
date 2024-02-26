@@ -24,6 +24,27 @@ public class VisitsManager {
         dbManager = new DatabaseManager();
     }
     public boolean registerAVisitor(Visitor visitor) {
+        PreparedStatement statement = null;
+        Connection connection = null;
+        ResultSet result = null;
+        String query = "INSERT INTO Visitante VALUES (?, ?, ?, ?, ?)";
+        try{
+            connection = dbManager.getConnection();
+            statement = connection.prepareStatement(query);
+            statement.setString(1,visitor.getId());
+            statement.setString(2, visitor.getName());
+            statement.setString(3, visitor.getLastname());
+            statement.setString(4, visitor.getEmail());
+            statement.setString(5, visitor.getBelonging());
+            statement.executeUpdate();
+            dbManager.closeConnection();
+        } catch(SQLException e) {
+            dbManager.closeConnection();
+            return false;
+        }
+        return true;
+    }
+    public boolean registerCheckIn(Visitor visitor) {
         boolean band = false;
         PreparedStatement statement = null;
         Connection connection = null;
@@ -42,44 +63,24 @@ public class VisitsManager {
             statement.executeUpdate();
             band = true;
         } catch(SQLException e) {
-            System.out.println(e);
             band = false;
         }
         dbManager.closeConnection();
         return band;
     }
-    public boolean registerCheckIn(Visitor visitor) {
-        PreparedStatement statement = null;
-        Connection connection = null;
-        ResultSet result = null;
-        String query = "INSERT INTO Visitante VALUES (?, ?, ?, ?)";
-        try{
-            connection = dbManager.getConnection();
-            statement = connection.prepareStatement(query);
-            statement.setString(1,visitor.getId());
-            statement.setString(2, visitor.getName());
-            statement.setString(3, visitor.getLastname());
-            statement.setString(4, visitor.getEmail());
-            statement.executeUpdate();
-            dbManager.closeConnection();
-        } catch(SQLException e) {
-            dbManager.closeConnection();
-            return false;
-        }
-        return true;
-    }
     public boolean registerCheckOut(String id) {
         boolean band = false;
         PreparedStatement statement = null;
         Connection connection = null;
-        ResultSet result = null;
-        String query = "UPDATE Visita SET horaSalida = ? WHERE codigoV = ?";
+        String query = "UPDATE Visita SET horaSalida = ? WHERE codigoV = ? AND fecha = ?";
         String currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         try{
             connection = dbManager.getConnection();
             statement = connection.prepareStatement(query);
             statement.setString(1,currentTime);
             statement.setString(2, id);
+            statement.setString(3, date);
             statement.executeUpdate();
             band = true;
         } catch(SQLException e) {
@@ -93,8 +94,11 @@ public class VisitsManager {
         PreparedStatement statement = null;
         Connection connection = null;
         ResultSet result = null;
-        String query = "SELECT Visitante.nombreV as name, "
+        String query = "SELECT Visitante.tipo as type, "
+                    + "Visitante.codigoV as id, "
+                    + "Visitante.nombreV as name, "
                     + "Visitante.correoV as email, "
+                    + "Visita.asunto as subject, "
                     + "Visita.horaEntrada as entry, "
                     + "Visita.horaSalida as departure "
                     + "FROM Visita INNER JOIN Visitante "
@@ -108,8 +112,11 @@ public class VisitsManager {
             result = statement.executeQuery();
             while(result.next()) {
                 Visit visit = new Visit();
+                visit.setBelonging(result.getString("type"));
+                visit.setId(result.getString("id"));
                 visit.setName(result.getString("name"));
                 visit.setEmail(result.getString("email"));
+                visit.setSubject(result.getString("subject"));
                 visit.setEntryTime(result.getString("entry"));
                 visit.setDepartureTime(result.getString("departure"));
                 visits.add(visit);

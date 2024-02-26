@@ -7,6 +7,9 @@ package mx.fei.visitorsfeiapp.gui;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.Font;
+import mx.fei.visitorsfeiapp.logic.Visitor;
+import mx.fei.visitorsfeiapp.logic.VisitsManager;
+
 /**
  *
  * @author chuch
@@ -35,12 +38,13 @@ public class VisitorForm extends JFrame{
         this.setVisible(true);
         
         checkMemberUV = new JCheckBox("Miembro de la UV");
-        checkExternal = new JCheckBox("Miembro de la UV");
+        checkExternal = new JCheckBox("Externo a la UV");
         ButtonGroup groupCheckBoxes = new ButtonGroup(); 
         groupCheckBoxes.add(checkMemberUV);
         groupCheckBoxes.add(checkExternal);
         checkMemberUV.setBounds(650, 100, 200, 50);
         checkExternal.setBounds(650, 150, 200, 50);
+        checkMemberUV.setSelected(true);
         this.add(checkMemberUV);
         this.add(checkExternal);
         
@@ -106,11 +110,35 @@ public class VisitorForm extends JFrame{
         jButton2.setBounds(500, 380, 150, 50);
         this.add(jButton2);
     }
-    private void jButton1ActionPerformed(ActionEvent evt) {                                         
-        // TODO add your handling code here:
+    private void jButton1ActionPerformed(ActionEvent evt) {
+        Visitor visitor = new Visitor();
+        if(checkMemberUV.isSelected()) {
+            visitor.setBelonging("MemberUV");
+        } else {
+            visitor.setBelonging("External");
+        }
+        visitor.setId(jtxtField1.getText());
+        visitor.setName(jtxtField2.getText());
+        visitor.setLastname(jtxtField3.getText());
+        visitor.setEmail(jtxtField4.getText());
+        
+        Validator validator = new Validator();
+        if(validator.validateVisitorData(visitor)){
+            VisitsManager visits = new VisitsManager();
+            if(visits.registerAVisitor(visitor)) {
+                jtxtField1.setText("");
+                jtxtField2.setText("");
+                jtxtField3.setText("");
+                jtxtField4.setText("");
+                JOptionPane.showMessageDialog(this, "Se ha guardado con exito");
+            } else {
+                JOptionPane.showMessageDialog(this, "No se ha guardado");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No se ha guardado");
+        }
     }                                        
-    private void jButton2ActionPerformed(ActionEvent evt) {                                         
-        // TODO add your handling code here:
+    private void jButton2ActionPerformed(ActionEvent evt) { 
         this.dispose();
     } 
 }

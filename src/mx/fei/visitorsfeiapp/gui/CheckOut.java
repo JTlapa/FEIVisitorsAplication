@@ -7,6 +7,7 @@ package mx.fei.visitorsfeiapp.gui;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.Font;
+import mx.fei.visitorsfeiapp.logic.VisitsManager;
 /**
  *
  * @author chuch
@@ -60,11 +61,15 @@ public class CheckOut extends JFrame{
         jButton2.setBounds(500, 320, 150, 50);
         this.add(jButton2);
     }
-    private void jButton1ActionPerformed(ActionEvent evt) {                                         
-        // TODO add your handling code here:
+    private void jButton1ActionPerformed(ActionEvent evt) {
+        VisitsManager visits = new VisitsManager();
+        if(visits.registerCheckOut(jtxtField1.getText())) {
+            JOptionPane.showMessageDialog(this, "Se ha guardado su hora de salida");
+        } else {
+            JOptionPane.showMessageDialog(this, "No se ha registrado su hora de entrada");
+        }
     }                                        
-    private void jButton2ActionPerformed(ActionEvent evt) {                                         
-        // TODO add your handling code here:
+    private void jButton2ActionPerformed(ActionEvent evt) {  
         this.dispose();
     } 
 }

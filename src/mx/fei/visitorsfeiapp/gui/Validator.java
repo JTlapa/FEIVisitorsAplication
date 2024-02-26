@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import mx.fei.visitorsfeiapp.logic.Visitor;
 import mx.fei.visitorsfeiapp.logic.Administrator;
+import java.util.regex.Pattern;
 /**
  *
  * @author chuch
@@ -20,10 +21,9 @@ public class Validator {
         if(visitor.getLastname().length() == 0) {
             return false;
         }
-        if(visitor.getSubject().length() == 0) {
+        if(!Pattern.matches("[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]+", visitor.getEmail())) {
             return false;
         }
-        //INSERT A REGEX VALIDATION FOR THE EMAIL
         if(visitor.getBelonging().equals("MemberUV")) {
             if((visitor.getId().length() != 5) || Character.isDigit(visitor.getId().charAt(0))){
                 return false;
@@ -33,8 +33,8 @@ public class Validator {
                     return false;
                 }
             }
-        } else {
-            //INSERT A REGEX VALIDATION FOR THE ID EXTERNAL
+        } else if(!Pattern.matches("[0-9]+", visitor.getId())) {
+            return false; 
         }
         return true;
     }
@@ -52,8 +52,7 @@ public class Validator {
         return true;
     }
     public boolean validateAdministratorData(Administrator admin){
-        //INSERT A VALIDATION WITH REGEX
-        return true;
+        return Pattern.matches("[0-9]+", admin.getId());
     }
 }
 

@@ -7,6 +7,8 @@ package mx.fei.visitorsfeiapp.gui;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.Font;
+import mx.fei.visitorsfeiapp.logic.Visitor;
+import mx.fei.visitorsfeiapp.logic.VisitsManager;
 /**
  *
  * @author chuch
@@ -83,10 +85,23 @@ public class CheckIn extends JFrame{
         this.add(jButton2);
     }
     private void jButton1ActionPerformed(ActionEvent evt) {                                         
-        // TODO add your handling code here:
+        Visitor visitor = new Visitor();
+        visitor.setId(jtxtField1.getText());
+        visitor.setSubject(jtxtField2.getText());
+        visitor.setVisiting(jtxtField3.getText());
+        
+        
+        VisitsManager visits = new VisitsManager();
+        if(visits.registerCheckIn(visitor)) {
+            jtxtField1.setText("");
+            jtxtField2.setText("");
+            jtxtField3.setText("");
+            JOptionPane.showMessageDialog(this, "Se ha registrado la visita con exito");
+        } else {
+            JOptionPane.showMessageDialog(this, "No se ha registrado la visita");
+        }
     }                                        
-    private void jButton2ActionPerformed(ActionEvent evt) {                                         
-        // TODO add your handling code here:
+    private void jButton2ActionPerformed(ActionEvent evt) { 
         this.dispose();
     } 
 }

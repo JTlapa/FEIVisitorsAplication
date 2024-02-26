@@ -4,6 +4,7 @@
  */
 package mx.fei.visitorsfeiapp.gui;
 
+import mx.fei.visitorsfeiapp.logic.Administrator;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.Font;
@@ -18,7 +19,7 @@ public class LogIn extends JFrame {
     private JLabel jLabel1;
     private JLabel jLabel2;
     private JTextField jtxtField1;
-    private JTextField jtxtField2;
+    private JPasswordField password;
     
     public LogIn(){
         super("Visitas - FEI");
@@ -47,9 +48,9 @@ public class LogIn extends JFrame {
         jLabel2.setBounds(250,210,100,30);
         this.add(jLabel2);
         
-        jtxtField2 = new JTextField();
-        jtxtField2.setBounds(320,210,200,30);
-        this.add(jtxtField2);
+        password = new JPasswordField();
+        password.setBounds(320,210,200,30);
+        this.add(password);
         
         jButton1 = new JButton();
         jButton1.setText("Aceptar");
@@ -72,11 +73,22 @@ public class LogIn extends JFrame {
         this.add(jButton2);
     }
     private void jButton1ActionPerformed(ActionEvent evt) {                                         
-        // TODO add your handling code here:
-        new TableVisits();
+        Administrator admin = new Administrator();
+        admin.setId(jtxtField1.getText());
+        admin.setClave(password.getText());
+        Validator validator = new Validator();
+        if(validator.validateAdministratorData(admin)) {
+            if(admin.validatePassword()) {
+                TableVisits table = new TableVisits();
+            } else {
+                JOptionPane.showMessageDialog(this, "Datos invalidos");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Datos incorrectos");
+        }
+        
     }                                        
-    private void jButton2ActionPerformed(ActionEvent evt) {                                         
-        // TODO add your handling code here:
+    private void jButton2ActionPerformed(ActionEvent evt) {
         this.dispose();
     } 
 }

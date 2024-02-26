@@ -4,6 +4,9 @@
  */
 package mx.fei.visitorsfeiapp.gui;
 
+import mx.fei.visitorsfeiapp.logic.VisitsManager;
+import mx.fei.visitorsfeiapp.logic.Visit;
+import java.util.ArrayList;
 import java.awt.Color;
 import javax.swing.*;
 import java.awt.event.*;
@@ -96,11 +99,52 @@ public class TableVisits extends JFrame {
         scroll.setBounds(10,180,860,270);
         this.add(scroll);
     }
-    private void jButton1ActionPerformed(ActionEvent evt) {                                         
-        // TODO add your handling code here:
+    private void jButton1ActionPerformed(ActionEvent evt) {
+        Validator validator = new Validator();
+        VisitsManager visitsManager = new VisitsManager();
+        if(validator.validateDate(jtxtField1.getText())) {
+            ArrayList<Visit> visits = null;
+            visits = visitsManager.getVisitsByDay(jtxtField1.getText());
+            if(visits.isEmpty()){
+                JOptionPane.showMessageDialog(this, "No existen registros en esa fecha");
+            } else {
+                int YPosition = 5;
+                JPanel panelVisit;
+                JLabel columnData;
+                for(Visit visitor : visits){
+                    panelVisit = new JPanel();
+                    panelVisit.setBounds(5, YPosition, 800, 40);
+                    columnData = new JLabel(visitor.getBelonging());
+                    columnData.setBounds(10,10,80,20);
+                    panelVisit.add(columnData);
+                    columnData = new JLabel(visitor.getId());
+                    columnData.setBounds(100,10,80,20);
+                    panelVisit.add(columnData);
+                    columnData = new JLabel(visitor.getName());
+                    columnData.setBounds(200,10,80,20);
+                    panelVisit.add(columnData);
+                    columnData = new JLabel(visitor.getEmail());
+                    columnData.setBounds(300,10,170,20);
+                    panelVisit.add(columnData);
+                    columnData = new JLabel(visitor.getSubject());
+                    columnData.setBounds(500,10,80,20);
+                    panelVisit.add(columnData);
+                    columnData = new JLabel(visitor.getEntryTime());
+                    columnData.setBounds(600,10,80,20);
+                    panelVisit.add(columnData);
+                    columnData = new JLabel(visitor.getDepartureTime());
+                    columnData.setBounds(700,10,80,20);
+                    panelVisit.add(columnData);
+                    table.add(panelVisit);
+                    YPosition += 45;
+                }
+                table.repaint();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Formato de fecha invalido (aaaa-mm-dd)");
+        }
     }                                        
-    private void jButton2ActionPerformed(ActionEvent evt) {                                         
-        // TODO add your handling code here:
+    private void jButton2ActionPerformed(ActionEvent evt) {     
         this.dispose();
     } 
 }
