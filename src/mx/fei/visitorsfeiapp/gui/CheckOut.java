@@ -1,28 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package mx.fei.visitorsfeiapp.gui;
 
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.Font;
 import mx.fei.visitorsfeiapp.logic.VisitsManager;
-/**
- *
- * @author chuch
- */
-public class CheckOut extends JFrame{
+
+public class CheckOut extends JFrame {
     private JButton jButton1;
     private JButton jButton2;
     private JLabel title;
     private JLabel jLabel1;
     private JTextField jtxtField1;
     
-    public CheckOut(){
+    public CheckOut() {
         super("Visitas - FEI");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setBounds(180,100,900,500);
+        this.setBounds(180, 100, 900, 500);
         this.setLayout(null);
         this.setVisible(true);
         
@@ -34,11 +27,11 @@ public class CheckOut extends JFrame{
 
         jLabel1 = new JLabel("Codigo de identificacion:");
         jLabel1.setFont(new Font("Dialog", 0, 15));
-        jLabel1.setBounds(300,150,300,30);
+        jLabel1.setBounds(300, 150, 300, 30);
         this.add(jLabel1);
         
         jtxtField1 = new JTextField();
-        jtxtField1.setBounds(300,200,300,30);
+        jtxtField1.setBounds(300, 200,300, 30);
         this.add(jtxtField1);
         
         jButton1 = new JButton();

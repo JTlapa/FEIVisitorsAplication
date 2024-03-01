@@ -1,17 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package mx.fei.visitorsfeiapp.gui;
 
 import mx.fei.visitorsfeiapp.logic.Administrator;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.Font;
-/**
- *
- * @author chuch
- */
+
 public class LogIn extends JFrame {
     private JButton jButton1;
     private JButton jButton2;
@@ -21,7 +14,7 @@ public class LogIn extends JFrame {
     private JTextField jtxtField1;
     private JPasswordField password;
     
-    public LogIn(){
+    public LogIn() {
         super("Visitas - FEI");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setBounds(180,100,900,500);

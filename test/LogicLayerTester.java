@@ -3,15 +3,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import java.util.ArrayList;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author chuch
- */
 public class LogicLayerTester {
     
     @Test
@@ -48,7 +39,6 @@ public class LogicLayerTester {
     }
     
     @Test
-
     public void testGetVisitsByDaySuccess() {
         ArrayList <Visit> expectedList = new ArrayList();
         Visit visit = new Visit();

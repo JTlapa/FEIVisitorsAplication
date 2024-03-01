@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package mx.fei.visitorsfeiapp.logic;
 
 import java.sql.Connection;
@@ -13,10 +10,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import mx.fei.visitorsfeiapp.dataaccess.DatabaseManager;
-/**
- *
- * @author chuch
- */
+
 public class VisitsManager {
     public int registerAVisitor(Visitor visitor) {
         DatabaseManager dbManager;

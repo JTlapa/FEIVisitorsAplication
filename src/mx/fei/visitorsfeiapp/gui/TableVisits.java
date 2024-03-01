@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package mx.fei.visitorsfeiapp.gui;
 
 import mx.fei.visitorsfeiapp.logic.VisitsManager;
@@ -11,10 +7,7 @@ import java.awt.Color;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.Font;
-/**
- *
- * @author chuch
- */
+
 public class TableVisits extends JFrame {
     private JButton jButton1;
     private JButton jButton2;
@@ -25,7 +18,7 @@ public class TableVisits extends JFrame {
     private JScrollPane scroll;
     private JLabel column;
     
-    public TableVisits(){
+    public TableVisits() {
         super("Visitas - FEI");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setBounds(180,100,900,500);
