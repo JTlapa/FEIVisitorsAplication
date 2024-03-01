@@ -72,4 +72,18 @@ public class Visit {
     public void setSubject(String subject) {
         this.subject = subject;
     }
+    @Override
+    public boolean equals(Object object) {
+        if((object == null) || (object.getClass() != this.getClass())) {
+            return false;
+        }
+        Visit otherVisit = (Visit) object;
+        if(!otherVisit.getId().equals(this.getId())) {
+            return false;
+        }
+        if(!otherVisit.getName().equals(this.getName())) {
+            return false;
+        }
+        return true;
+    }
 }

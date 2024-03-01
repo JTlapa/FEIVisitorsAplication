@@ -63,8 +63,10 @@ public class CheckOut extends JFrame{
     }
     private void jButton1ActionPerformed(ActionEvent evt) {
         VisitsManager visits = new VisitsManager();
-        if(visits.registerCheckOut(jtxtField1.getText())) {
+        if(visits.registerCheckOut(jtxtField1.getText()) == 1) {
+            jtxtField1.setText("");
             JOptionPane.showMessageDialog(this, "Se ha guardado su hora de salida");
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "No se ha registrado su hora de entrada");
         }

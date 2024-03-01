@@ -125,12 +125,13 @@ public class VisitorForm extends JFrame{
         Validator validator = new Validator();
         if(validator.validateVisitorData(visitor)){
             VisitsManager visits = new VisitsManager();
-            if(visits.registerAVisitor(visitor)) {
+            if(visits.registerAVisitor(visitor) == 1) {
                 jtxtField1.setText("");
                 jtxtField2.setText("");
                 jtxtField3.setText("");
                 jtxtField4.setText("");
                 JOptionPane.showMessageDialog(this, "Se ha guardado con exito");
+                this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "No se ha guardado");
             }

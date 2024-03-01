@@ -14,7 +14,13 @@ import java.util.regex.Pattern;
  * @author chuch
  */
 public class Validator {
-    public boolean validateVisitorData(Visitor visitor) { 
+    public boolean validateVisitorData(Visitor visitor) {
+        if(visitor.getBelonging().equals("MemberUV")) {
+            return validateMemberUVData(visitor);
+        }
+        return validateExternalData(visitor);
+    }
+    public boolean validateExternalData(Visitor visitor) { 
         if(visitor.getName().length() == 0) {
             return false;
         }
@@ -24,17 +30,23 @@ public class Validator {
         if(!Pattern.matches("[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]+", visitor.getEmail())) {
             return false;
         }
-        if(visitor.getBelonging().equals("MemberUV")) {
-            if((visitor.getId().length() != 5) || Character.isDigit(visitor.getId().charAt(0))){
-                return false;
-            }
-            for(int i=1; i < visitor.getId().length(); i++) {
-                if(!Character.isDigit(visitor.getId().charAt(i))) {
-                    return false;
-                }
-            }
-        } else if(!Pattern.matches("[0-9]+", visitor.getId())) {
+        if(!Pattern.matches("[0-9]+", visitor.getId())) {
             return false; 
+        }
+        return true;
+    }
+    public boolean validateMemberUVData(Visitor visitor){
+        if(visitor.getName().length() == 0) {
+            return false;
+        }
+        if(visitor.getLastname().length() == 0) {
+            return false;
+        }
+        if(!Pattern.matches("[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]+", visitor.getEmail())) {
+            return false;
+        }
+        if(!Pattern.matches("[A-Z]{1}[0-9]{8}", visitor.getId())) {
+            return false;
         }
         return true;
     }

@@ -16,11 +16,7 @@ import mx.fei.visitorsfeiapp.dataaccess.DatabaseManager;
 public class Administrator {
     private String id;
     private String clave;
-    private DatabaseManager dbManager;
     
-    public Administrator(){
-        dbManager = new DatabaseManager();
-    }
     public String getId() {
         return id;
     }
@@ -36,6 +32,8 @@ public class Administrator {
     
     public boolean validatePassword(){
         boolean band = false;
+        DatabaseManager dbManager;
+        dbManager = new DatabaseManager();
         PreparedStatement statement = null;
         Connection connection = null;
         ResultSet result = null;

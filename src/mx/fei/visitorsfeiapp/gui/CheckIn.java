@@ -92,11 +92,12 @@ public class CheckIn extends JFrame{
         
         
         VisitsManager visits = new VisitsManager();
-        if(visits.registerCheckIn(visitor)) {
+        if(visits.registerCheckIn(visitor) == 1) {
             jtxtField1.setText("");
             jtxtField2.setText("");
             jtxtField3.setText("");
             JOptionPane.showMessageDialog(this, "Se ha registrado la visita con exito");
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "No se ha registrado la visita");
         }

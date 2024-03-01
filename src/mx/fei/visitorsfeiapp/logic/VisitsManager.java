@@ -18,15 +18,12 @@ import mx.fei.visitorsfeiapp.dataaccess.DatabaseManager;
  * @author chuch
  */
 public class VisitsManager {
-    private DatabaseManager dbManager;
-    
-    public VisitsManager() {
+    public int registerAVisitor(Visitor visitor) {
+        DatabaseManager dbManager;
         dbManager = new DatabaseManager();
-    }
-    public boolean registerAVisitor(Visitor visitor) {
-        PreparedStatement statement = null;
-        Connection connection = null;
-        ResultSet result = null;
+        PreparedStatement statement;
+        Connection connection;
+        int result = 0;
         String query = "INSERT INTO Visitante VALUES (?, ?, ?, ?, ?)";
         try{
             connection = dbManager.getConnection();
@@ -36,18 +33,20 @@ public class VisitsManager {
             statement.setString(3, visitor.getLastname());
             statement.setString(4, visitor.getEmail());
             statement.setString(5, visitor.getBelonging());
-            statement.executeUpdate();
+            result = statement.executeUpdate();
             dbManager.closeConnection();
         } catch(SQLException e) {
             dbManager.closeConnection();
-            return false;
+            return result;
         }
-        return true;
+        return result;
     }
-    public boolean registerCheckIn(Visitor visitor) {
-        boolean band = false;
-        PreparedStatement statement = null;
-        Connection connection = null;
+    public int registerCheckIn(Visitor visitor) {
+        DatabaseManager dbManager;
+        dbManager = new DatabaseManager();
+        PreparedStatement statement;
+        Connection connection;
+        int result;
         String query = "INSERT INTO Visita VALUES (?, 'FEI', ?, ?, Null, ?, ?)";
         
         String currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
@@ -60,19 +59,21 @@ public class VisitsManager {
             statement.setString(3, currentTime);
             statement.setString(4, visitor.getVisiting());
             statement.setString(5, visitor.getSubject());
-            statement.executeUpdate();
-            band = true;
-        } catch(SQLException e) {
-            band = false;
+            result = statement.executeUpdate();
+        } catch(SQLException e) {   
+            result = 0;
         }
         dbManager.closeConnection();
-        return band;
+        return result;
     }
-    public boolean registerCheckOut(String id) {
-        boolean band = false;
-        PreparedStatement statement = null;
-        Connection connection = null;
+    public int registerCheckOut(String id) {
+        DatabaseManager dbManager;
+        dbManager = new DatabaseManager();
+        PreparedStatement statement;
+        Connection connection;
+        int result;
         String query = "UPDATE Visita SET horaSalida = ? WHERE codigoV = ? AND fecha = ?";
+        
         String currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         try{
@@ -81,16 +82,17 @@ public class VisitsManager {
             statement.setString(1,currentTime);
             statement.setString(2, id);
             statement.setString(3, date);
-            statement.executeUpdate();
-            band = true;
+            result = statement.executeUpdate();
         } catch(SQLException e) {
-            band = false;
+            result = 0;
         }
         dbManager.closeConnection();
-        return band;
+        return result;
     }
     public ArrayList<Visit> getVisitsByDay(String date){
         boolean band = false;
+        DatabaseManager dbManager;
+        dbManager = new DatabaseManager();
         PreparedStatement statement = null;
         Connection connection = null;
         ResultSet result = null;
@@ -104,6 +106,7 @@ public class VisitsManager {
                     + "FROM Visita INNER JOIN Visitante "
                     + "ON Visita.codigoV = Visitante.codigoV "
                     + "WHERE Visita.fecha = ?";
+        
         ArrayList<Visit> visits = new ArrayList();
         try{
             connection = dbManager.getConnection();
